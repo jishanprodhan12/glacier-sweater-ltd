@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glacier ID Card </title>
+    <link rel="shortcut icon" href="./logo.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #e5e7eb; }
+        
+        /* Apnar Ager Design er Dimensions */
+        .id-card { width: 350px; height: 550px; background: white; border: 1px solid #d1d5db; position: relative; overflow: hidden; border-radius: 15px; flex-shrink: 0; }
+        .navy-accent { background-color: #1a365d; }
+        .text-navy { color: #1a365d; }
+
+        /* Combined Layout for Download */
+        #download-area { 
+            display: flex; 
+            gap: 20px; 
+            padding: 20px; 
+            background: white; 
+            width: fit-content;
+            position: absolute;
+            left: -9999px; /* Screen e dekhabe na, sudhu download e ashbe */
+        }
+    </style>
+</head>
+<body class="p-6">
+
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+        <div class="w-full lg:w-1/3 bg-white p-6 rounded-2xl shadow-xl border border-gray-200 h-fit">
+            <h2 class="text-xl font-black text-navy mb-6 border-b-2 border-orange-400 pb-2 uppercase">Card Details</h2>
+            <div class="space-y-3">
+                <input type="text" id="inName" value="MD. Zeshan Prodhan" class="w-full border p-2 rounded-lg">
+                <input type="text" id="inDesig" value="Jr. Officer" class="w-full border p-2 rounded-lg">
+                <input type="text" id="inID" value="16026" class="w-full border p-2 rounded-lg">
+                <input type="text" id="inDept" value="Finishing" class="w-full border p-2 rounded-lg">
+                <input type="text" id="inJoin" value="12/05/2023" class="w-full border p-2 rounded-lg">
+                <input type="text" id="inIssue" value="01/06/2025" class="w-full border p-2 rounded-lg">
+                <input type="file" id="imgUpload" class="text-xs w-full bg-slate-50 p-2 border rounded-lg">
+                
+                <button onclick="downloadCombined()" class="w-full mt-4 bg-orange-500 text-white py-4 rounded-xl font-black shadow-lg hover:bg-orange-600 transition uppercase tracking-widest">
+                    Download Combined (Front + Back)
+                </button>
+            </div>
+        </div>
+
+        <div class="w-full lg:w-2/3 flex flex-wrap justify-center gap-6">
+            
+            <div id="front-card-preview" class="id-card shadow-2xl flex flex-col">
+                <div class="navy-accent p-4 text-center text-white">
+                    <h1 class="text-sm font-black tracking-widest uppercase">Glacier Sweater Composite LTD</h1>
+                </div>
+                <div class="flex flex-col items-center pt-4">
+                    <img src="./logo.png" class="h-14 mb-2" onerror="this.src='https://via.placeholder.com/50x50?text=LOGO'">
+                    <p class="text-xs font-black text-gray-900 uppercase tracking-tighter mb-2">Yarn Dyeing Factory</p>
+                    <div class="w-full navy-accent text-white py-1 font-black text-lg uppercase tracking-[4px] mb-4 text-center">Staff Card</div>
+                    
+                    <div class="w-32 h-32 rounded-full border-[6px] border-slate-100 overflow-hidden shadow-inner mb-4">
+                        <img id="cardImgPreview" src="https://via.placeholder.com/150" class="w-full h-full object-cover">
+                    </div>
+
+                    <h2 id="cardName" class="text-xl font-black text-navy uppercase leading-none">MD. Zeshan Prodhan</h2>
+                    <p id="cardDesig" class="text-orange-600 font-bold italic text-sm mb-4">Jr. Officer</p>
+
+                    <div class="w-full px-10 text-left space-y-1.5 border-t border-gray-100 pt-4">
+                        <div class="flex justify-between text-[11px] font-bold text-gray-600 uppercase">
+                            <span>Department</span> <span id="cardDept" class="text-navy">Finishing</span>
+                        </div>
+                        <div class="flex justify-between text-[11px] font-bold text-gray-600 uppercase">
+                            <span>ID Number</span> <span id="cardID" class="text-navy">16026</span>
+                        </div>
+                        <div class="flex justify-between text-[11px] font-bold text-gray-600 uppercase">
+                            <span>Blood Group</span> <span class="text-navy">O+</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-auto p-6 flex justify-between items-end bg-slate-50">
+                    <div class="text-[9px] font-bold text-gray-500">FACTORY ADDRESS:<br><span class="font-normal text-gray-800">Khagan, Ashulia, Birulia</span></div>
+                    <div class="text-center border-t border-gray-400 pt-1">
+                        <p class="text-[9px] font-black uppercase">Abdul Alim</p>
+                        <p class="text-[7px] italic opacity-70">Auth. Signature</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="back-card-preview" class="id-card shadow-2xl flex flex-col items-center bg-white">
+                <div class="w-full navy-accent h-2 mb-6"></div>
+                <h3 class="text-navy font-black text-lg mb-8 uppercase tracking-widest border-b-2 border-orange-400">Directives</h3>
+                <ul class="px-10 text-[10px] font-bold space-y-4 text-gray-700 list-disc italic">
+                    <li>This card is non-transferable and remains company property.</li>
+                    <li>Always wear this card while inside the factory premises.</li>
+                    <li>Loss of card must be reported to HR within 24 hours.</li>
+                </ul>
+                <div class="w-full px-10 mt-12 space-y-2">
+                    <div class="flex justify-between text-[11px] font-black border-b border-dashed pb-1">
+                        <span>JOINING DATE:</span> <span id="cardJoin" class="text-navy uppercase">12/05/2023</span>
+                    </div>
+                    <div class="flex justify-between text-[11px] font-black border-b border-dashed pb-1">
+                        <span>ISSUE DATE:</span> <span id="cardIssue" class="text-navy uppercase">01/06/2025</span>
+                    </div>
+                </div>
+                <div class="mt-auto mb-10 text-center">
+                    <img id="qrPreview" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=16026-STAFF" class="w-20 h-20 mx-auto border-2 border-navy-accent p-1">
+                    <p class="text-[8px] font-black mt-2 tracking-[4px] text-gray-400 uppercase">Secure Access</p>
+                </div>
+                <div class="w-full navy-accent text-white py-3 text-[10px] text-center font-black tracking-[3px] uppercase">www.glaciersweater.com</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="download-area"></div>
+    <p class="py-3 text-sm text-gray-400 text-center">All right reserved Jishan Prodhan @2026 </p>
+
+    <script>
+        // Sync Inputs to Card
+        const sync = (id, target) => document.getElementById(id).addEventListener('input', (e) => {
+            document.querySelectorAll(`#${target}`).forEach(el => el.innerText = e.target.value);
+            if(id === 'inID') {
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${e.target.value}-STAFF`;
+                document.querySelectorAll('#qrPreview').forEach(img => img.src = qrUrl);
+            }
+        });
+
+        sync('inName', 'cardName'); sync('inDesig', 'cardDesig');
+        sync('inID', 'cardID'); sync('inDept', 'cardDept');
+        sync('inJoin', 'cardJoin'); sync('inIssue', 'cardIssue');
+
+        // Photo Upload
+        document.getElementById('imgUpload').addEventListener('change', function(e) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                document.querySelectorAll('#cardImgPreview').forEach(img => img.src = reader.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        // Combined Download Function
+        async function downloadCombined() {
+            const downloadArea = document.getElementById('download-area');
+            
+            // Preview cards gulo ke clone kore download area te pashapashi rakha
+            const frontClone = document.getElementById('front-card-preview').cloneNode(true);
+            const backClone = document.getElementById('back-card-preview').cloneNode(true);
+            
+            downloadArea.innerHTML = '';
+            downloadArea.appendChild(frontClone);
+            downloadArea.appendChild(backClone);
+
+            // Canvas capture
+            html2canvas(downloadArea, { 
+                scale: 3, 
+                useCORS: true,
+                backgroundColor: "#ffffff"
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Everway-ID-Print-Sheet.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                downloadArea.innerHTML = ''; // Clear after download
+            });
+        }
+    </script>
+</body>
+</html>
